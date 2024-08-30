@@ -11,12 +11,12 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            const { Octokit } = require("@octokit/rest");
+            const { Octokit } = require("@octokit/core");
             const octokit = new Octokit({
               auth: process.env.PAT
             });
 
-            octokit.actions.createWorkflowDispatch({
+            octokit.request('POST /repos/{owner}/{repo}/actions/workflows/{workflow_id}/dispatches', {
               owner: 'DXZA091o',
               repo: 'zelis-ideathon',
               workflow_id: 'call-docker-build-frontend.yml',  // Replace with the actual workflow file name in repo1
