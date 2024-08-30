@@ -19,16 +19,18 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            const { Octokit } = require("@octokit/core");
-            const octokit = new Octokit({
-              auth: process.env.PAT
-            });
+            (async () => {
+              const { Octokit } = await import("@octokit/core");
+              const octokit = new Octokit({
+                auth: process.env.PAT
+              });
 
-            octokit.request('POST /repos/{owner}/{repo}/actions/workflows/{workflow_id}/dispatches', {
-              owner: 'DXZA091o',
-              repo: 'zelis-ideathon',
-              workflow_id: 'call-docker-build-frontend.yml',  // Replace with the actual workflow file name in repo1
-              ref: 'main'  // Replace with the branch you want to trigger the workflow on
-            });
+              await octokit.request('POST /repos/{owner}/{repo}/actions/workflows/{workflow_id}/dispatches', {
+                owner: 'DXZA091o',
+                repo: 'zelis-ideathon',
+                workflow_id: 'call-docker-build-frontend.yml',  // Replace with the actual workflow file name in repo1
+                ref: 'main'  // Replace with the branch you want to trigger the workflow on
+              });
+            })();
         env:
           PAT: ${{ secrets.PAT }}
