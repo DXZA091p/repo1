@@ -7,30 +7,10 @@ jobs:
   trigger-workflow:
     runs-on: ubuntu-latest
     steps:
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '20'  # Update to Node.js 20
-
-      - name: Install dependencies
-        run: npm install @octokit/core
-
       - name: Trigger actions Workflow
-        uses: actions/github-script@v6
+        uses: peter-evans/repository-dispatch@v2
         with:
-          script: |
-            (async () => {
-              const { Octokit } = await import(process.cwd() + '/node_modules/@octokit/core/dist-node/index.js');
-              const octokit = new Octokit({
-                auth: process.env.PAT
-              });
-
-              await octokit.request('POST /repos/{owner}/{repo}/actions/workflows/{workflow_id}/dispatches', {
-                owner: 'DXZA091o',
-                repo: 'zelis-ideathon',
-                workflow_id: 'call-docker-build-frontend.yml',  // Replace with the actual workflow file name in repo1
-                ref: 'main'  // Replace with the branch you want to trigger the workflow on
-              });
-            })();
-        env:
-          PAT: ${{ secrets.PAT }}
+          token: ${{ secrets.PAT }}
+          repository: 'DXZA091o/zelis-ideathon'
+          event-type: 'workflow-dispatch'
+          client-payload: '{"workflow_id": "call-docker-build-frontend", "ref": "main"}'
