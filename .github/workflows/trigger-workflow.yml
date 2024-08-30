@@ -1,0 +1,25 @@
+name: Trigger Workflow in first org
+
+on:
+  workflow_dispatch:
+
+jobs:
+  trigger-workflow:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger actions Workflow
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const octokit = require('@octokit/rest')({
+              auth: process.env.PAT
+            });
+
+            octokit.actions.createWorkflowDispatch({
+              owner: 'DXZA091o',
+              repo: 'zelis-ideathon',
+              workflow_id: 'call-docker-build-frontend.yml',  // Replace with the actual workflow file name in repo1
+              ref: 'main'  // Replace with the branch you want to trigger the workflow on
+            });
+        env:
+          PAT: ${{ secrets.PAT }}
