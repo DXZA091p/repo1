@@ -12,18 +12,18 @@ jobs:
         with:
           node-version: '16'  # Specify the Node.js version you need
 
+      - name: Create node_modules directory
+        run: mkdir -p node_modules
+
       - name: Install dependencies
         run: npm install @octokit/core
-
-      - name: Install @octokit/core globally
-        run: npm install -g @octokit/core
 
       - name: Trigger actions Workflow
         uses: actions/github-script@v6
         with:
           script: |
             (async () => {
-              const { Octokit } = await import("@octokit/core");
+              const { Octokit } = await import(process.cwd() + '/node_modules/@octokit/core');
               const octokit = new Octokit({
                 auth: process.env.PAT
               });
