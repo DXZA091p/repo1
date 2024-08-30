@@ -13,4 +13,7 @@ jobs:
           token: ${{ secrets.PAT }}
           repository: 'DXZA091o/zelis-ideathon'
           event-type: 'workflow-dispatch'
-          client-payload: '{"workflow_id": "call-docker-build-frontend.yml", "ref": "main"}'
+          client-payload: '{"workflow_id": "call-docker-build-frontend", "ref": "main"}'
+
+      - name: Log payload
+        run: echo 'Payload: {"workflow_id": "call-docker-build-frontend", "ref": "main"}'
