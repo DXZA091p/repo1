@@ -13,4 +13,4 @@ jobs:
           token: ${{ secrets.PAT }}
           repository: 'mdx-dev/QA-Automation'
           event-type: 'workflow-dispatch'
-          client-payload: '{"workflow_id": "ui", "ref": "diff"}'
+          client-payload: '{"workflow_id": "ui.yml", "ref": "diff"}'
