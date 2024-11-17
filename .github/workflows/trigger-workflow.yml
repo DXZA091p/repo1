@@ -1,4 +1,4 @@
-name: Trigger Workflow in mdx-dev org
+name: Trigger Workflow in first org
 
 on:
   workflow_dispatch:
@@ -11,6 +11,6 @@ jobs:
         uses: peter-evans/repository-dispatch@v2
         with:
           token: ${{ secrets.PAT }}
-          repository: 'mdx-dev/QA-Automation'
+          repository: 'DXZA091o/zelis-ideathon'
           event-type: 'workflow-dispatch'
-          client-payload: '{"workflow_id": "ui.yml", "ref": "diff"}'
+          client-payload: '{"workflow_id": "call-docker-build-frontend", "ref": "main"}'
